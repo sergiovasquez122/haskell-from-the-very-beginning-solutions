@@ -1,0 +1,48 @@
+1. Write a function which multiplies a given number by ten. What is its type?
+
+multiplyByTen x = x * 10
+
+multiplyByTen :: Num a => a -> a
+
+2. Write a function which returns True if both of its arguments are non-zero, and False otherwise. What is the type of your function?
+
+pairsNonZero x y = x /= 0 && y /= 0
+
+pairsNonZero :: (Eq a, Eq b, Num a, Num b) => a -> b -> bool
+
+3. Write a recursive sum' which ,given a number n, calculates the sum 1 + 2 + 3 + .. + n. What is its type?
+
+sum' x = if x == 1 then 1 else x + sum'(x - 1)
+
+sum' :: (Eq p, Num p) => p -> p
+
+4. Write a function power x n which raises x to the power n. Give its type.
+
+power x n = if n == 0 then 1 else x * power x (n - 1)
+
+power :: (Eq t, Num t, Num p) => p -> t -> p
+
+5. Write a function isConsonant which, given a lower-case character in the range 'a'...'z', determines if it is a consonant.
+
+using the isVowel function defined in the chapter
+
+isConsonant c = not (isVowel c)
+
+isConsonant :: Char -> Bool
+
+6. What is the result of the expression let x = 1 in let x = 2 in x + x
+
+the answer will be 4.
+
+7. Can you suggest a way of preventing the non-termination of the factorial function in the case of zero or negative argument?
+
+We could return 0 for a negative value and 1 if the value is 0
+
+:{
+    factorial n =
+            if n < 0 then 0 else
+            if n == 0 then 1 else
+            n * factorial (n - 1)
+:}
+
+factorial :: (Ord a, Num a) => a -> a
