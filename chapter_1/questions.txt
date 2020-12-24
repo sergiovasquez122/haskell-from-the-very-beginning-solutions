@@ -1,0 +1,45 @@
+1. What sort of things do the following expressions represent and what do they evauate to, and why?
+
+17 this is a value.
+1 + 2 * 3 + 4 this evaluates to 11
+400 > 200 this evaluate to True
+1 /= 1 this evaluates to False
+True || False this evaluates to True
+True && False this evaluates to False
+if True then False else True this evaluates to False
+'%' this is a value
+
+2. These expressions are not valid Haskell. In each case, why? Can you correct them?
+
+1 + -1 this should be changed to 1 + (-1)
+A == a this should be changed to 'A' == 'a'
+false || true this should be changed to False || True
+if 'A' > 'a' then True this should be changed to if 'A' > 'a' then True else False
+'a' + 'b' the + operator is not defined on characters
+
+3. A programmer writes 1 + 2 * 3+4. What does this evaluate to? What advice would you give them?
+
+This will evaluate to 11 since multiplication has higher precedence. I would advice them to add parentheses around the portions they would like to have highest precedence to make the statement less ambigious
+
+4. Haskell has a remainder operator, which finds the remainder of divind one number by another. It is written `rem`.
+Consider the evaluations of the expressions 1 + 2 `rem`3, (1 + 2)`rem` 3, and 1 + (2 `rem` 3). What can you conclude about the + and `rem` operators?
+
+1 + 2 `rem` 3 evaluates to 3
+
+(1 + 2) `rem` 3 evaluates to 0
+
+1 + (2 `rem` 3) evaluates to 3
+
+we conclude that `rem` has a higher precedence than +
+
+5. Why not just use, for example, the number 0 to represent falsity and the number 1 for truth? why have separate True and False at all?
+
+c++ and c have the usage of 0 and false and anything else as true. This is prone to errors in code and so having separate true and false values can help ensure the correctness of one's program.
+
+6. What is the effect of the comparision operators like < and > on alphabetic characters? For example, what does 'p' < 'q' evaluate to? What about 'A' < 'a'? What is the effect ofthe comparison operators on the boolean True and False?
+
+'p' < 'q' is True by lexigraphical comparision
+'A' < 'a' is True by lexigraphical comparisoin
+
+True < False evaluates to False
+False < True evaluate to True
