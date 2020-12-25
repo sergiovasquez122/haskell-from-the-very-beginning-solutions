@@ -46,3 +46,62 @@ We could return 0 for a negative value and 1 if the value is 0
 :}
 
 factorial :: (Ord a, Num a) => a -> a
+
+8. Here are some expressions and function definitions and some types. Pair them up.
+
+1		Ord a => a -> a -> Bool
+1 + 2		(Ord a, Num a) => a -> a -> Bool
+f x y = x < y 	Num a -> a -> b -> c -> a
+g x y = x < y + 2 Num a => b
+h x y = 0 	  Num a => b -> c -> a
+i x y z = x + 10	Num a => a
+
+1 Num a => a
+1 + 2 Num a => a
+f x y = x < y Ord a => a -> a -> Bool
+g x y = x < y + 2 (Ord a, Num a) => a -> a -> Bool
+h x y = 0 Num a => b -> c -> a
+i x y z = x + 10 Num a => a -> b -> c -> a
+
+9. Infer types for the following expressions or function definitions.
+
+46 * 10 Num a => a -> a
+2 > 1 Bool
+f x = x + x Num a => a -> a
+i a b c = b a -> b -> c -> b
+g x y z = x + 1 < y (Num x, Ord x) => x -> x -> z -> Bool
+
+10.
+Why are the following expressoins or function definitions not accepted by Haskell?
+
+True + False
+
++ not defined for Boolean
+
+6 + '6'
+
++ not defined for Num and Char
+
+f x y z = (x < y) < (z + 1)
+
+< not defined for Bool and Num
+
+11. Which of the following types are equivalent to one another and which are different? Which are not valid types?
+
+Num a => b # invalid 
+Num b => b -> a 
+(Ord a, Num a) => a -> a
+(Num a, Ord a) => a -> a
+Num t1 => t1
+Num a => a -> b
+Num a => a -> a 
+Num a => a
+
+Num a => a and Num t1 => t1 are equivalent
+(Ord a, Num a) => a -> a and (Num a, Ord a) => a -> a are equivalent
+Num a => a -> b and  Num b => b -> a are equivalent
+
+12. These types are correct, but have some constraints which are not required. Remove them.
+(Eq a, Ord a) => a -> b -> a # Ord(a) => a -> b -> a
+(Ord a, Eq a, Eq b) => b -> b -> a # (Ord a, Eq b) => b -> b -> a
+
