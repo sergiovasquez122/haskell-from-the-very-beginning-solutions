@@ -7,9 +7,14 @@ elem' _ []  = False
 elem' k (x:xs) = k == x || elem' k xs
 
 elemAll :: (Eq a) => a -> [[a]] -> Bool
-
-elemAll = ...
+elemAll e = not . (elem' False) . (map (elem' e))
 -- 3. Write a function which maps a function over list of list of lists, using the technique described in this chapter.
 mapll :: (a -> b) -> [[[a]]] -> [[[b]]]
 
 mapll = map . map . map
+-- 4. Write a function truncateList which takes an integer and a list of lists, and returns a list of lists, each of which has been truncated to the given length. If a list is shorter than the given length, it is unchanged. Make use of partial applications.
+-- truncateList :: (Ord a, Num a) => a -> [b] -> [b]
+-- truncateLists :: (Ord a, Num a) => a -> [[b]] -> [[b]]
+
+-- truncateList n l = if length l >= n then (take n l) else l
+-- truncateLists l = (map truncateList) l 
