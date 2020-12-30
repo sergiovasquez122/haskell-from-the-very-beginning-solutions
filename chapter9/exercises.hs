@@ -36,3 +36,7 @@ firstElts :: a -> [[a]] -> [a]
 firstElt n [] = n
 firstElt n (x:_) = x
 firstElts n = map' (firstElt n)
+-- 6. Use an operator section to write a function which puts a given number onto the front of all the lists in  list of lists of numbers
+putFrontl :: (Num a) => a -> [[a]] -> [[a]]
+
+putFrontl n ls = map' (n :) ls
