@@ -11,17 +11,17 @@ rotateRectangle :: (Num a, Ord a) => Rect a -> Rect a
 rotateRectangle (Square a) = (Square a)
 rotateRectangle (Rectangle l w) = (Rectangle (max l w) w)
 -- 4. Use this function to write one which given a [Rect], return another such list which hs the smallest total width and whose members are sorted narrowes first
-widthOfRect :: Rect a -> a
-rectCompare :: Ord a => Rect a -> Rect -> Bool
-pack :: Ord a => [Rect a] -> [Rect a]
+-- widthOfRect :: Rect a -> a
+-- rectCompare :: Ord a => Rect a -> Rect a -> Bool
+-- pack :: Ord a => [Rect a] -> [Rect a]
 
-widthOfRect (Square s) = s
-widthOfRect (Rectangle w _) = w
+-- widthOfRect (Square s) = s
+-- widthOfRect (Rectangle w _) = w
 
-rectCompare a b = 
-	widthOfRect a < widthOfRect b
+-- rectCompare a b = 
+--	widthOfRect a < widthOfRect b
 
-pack rs = sort rectCompare (map rotate rs)
+-- pack rs = sort rectCompare (map rotate rs)
 -- 5. Write version of the seqTake, seqDrop and seqMap for the Sequence type
 data Sequence a = Nil | Cons a (Sequence a) deriving Show
 
@@ -47,7 +47,45 @@ data Expr a = Num a
 	    | Divide (Expr a) (Expr a) 
 	    | Raise (Expr a) (Expr a) deriving Show
 
-evaluate :: Integral a => Expr a -> a evaluate (Num x) = x evaluate (Add e e') = evaluate e + evaluate e' evaluate (Subtract e e') = evaluate e - evaluate e'
+evaluate :: Integral a => Expr a -> a
+
+evaluate (Num x) = x
+evaluate (Add e e') = evaluate e + evaluate e'
+evaluate (Subtract e e') = evaluate e - evaluate e'
 evaluate (Multiply e e') = evaluate e * evaluate e'
 evaluate (Divide e e') = evaluate e `div` evaluate e'
 evaluate (Raise e e') = evaluate e ^ evaluate e'
+-- 7. Use the Maybe type to deal with the problem that a division by zero may occur in the evaluate function
+evaluate' :: Integral a => Expr a -> Maybe a
+
+evaluate' (Num x) = Just x
+evaluate' (Add e e') = 
+			let lhs = evaluate' e
+			    rhs = evaluate' e'
+			in 
+			  case (lhs, rhs) of
+       				(Nothing, _) -> Nothing
+				(_, Nothing) -> Nothing
+				(Just lhs', Just rhs') -> Just (lhs' + rhs')
+evaluate' (Subtract e e') = let lhs = evaluate' e
+				rhs = evaluate' e'
+				in 
+					case (lhs, rhs) of 
+       						(Nothing, _) -> Nothing
+						(_, Nothing) -> Nothing
+						(Just lhs', Just rhs') -> Just (lhs' + rhs')
+evaluate' (Multiply e e') = let lhs = evaluate' e
+				rhs = evaluate' e'
+				in 
+					case (lhs, rhs) of 
+						(Nothing, _) -> Nothing       
+						(_, Nothing) -> Nothing
+						(Just lhs', Just rhs') -> Just (lhs' * rhs')
+evaluate' (Divide e e') = let lhs = evaluate' e
+			      rhs = evaluate' e'
+			      in
+				case (lhs, rhs) of
+      					(Nothing, _) -> Nothing
+					(_, Nothing) -> Nothing
+					(_, Just 0) -> Nothing
+					(Just lhs', Just rhs') -> Just (lhs' `div` rhs')
