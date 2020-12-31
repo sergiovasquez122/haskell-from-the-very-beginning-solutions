@@ -17,3 +17,15 @@ sameStructure Lf Lf = True
 sameStructure _ Lf = False
 sameStructure Lf _ = False
 sameStructure (Br _ l r) (Br _ l' r') = (sameStructure l l') && (sameStructure r r')
+-- 4. Write a function treeOfList which builds a ttree representation of a dictionary froma list representation of a dictionary
+treeInsert :: Ord a => Tree (a, b) -> a -> b -> Tree (a, b)
+
+treeInsert Lf k v = Br (k, v) Lf Lf
+treeInsert (Br (k', v') l r) k v = 
+	if k == k' then Br (k, v) l r else
+	if k < k' then Br (k', v') (treeInsert l k v) r else
+		Br (k', v') l (treeInsert r k v)
+
+listDictToTreeDict :: Ord a => [(a, b)] -> Tree (a, b) 
+listDictToTreeDict [] = Lf
+listDictToTreeDict ((k, v):xs) = treeInsert (listDictToTreeDict xs) k v
