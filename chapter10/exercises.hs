@@ -12,7 +12,22 @@ rotateRectangle (Square a) = (Square a)
 rotateRectangle (Rectangle l w) = (Rectangle (max l w) w)
 -- 4. Use this function to write one which given a [Rect], return another such list which hs the smallest total width and whose members are sorted narrowes first
 -- 5. Write version of the seqTake, seqDrop and seqMap for the Sequence type
+data Sequence a = Nil | Cons a (Sequence a) deriving Show
 
+seqTake :: (Num n, Ord n) => n -> Sequence a -> Sequence a
+
+seqTake 0 _ = Nil
+seqTake n (Cons x xs) = Cons x (seqTake (n - 1) xs)
+
+seqDrop :: (Num n, Eq n) => n -> Sequence a -> Sequence a
+
+seqDrop 0 (Cons x xs) = (Cons x xs)
+seqDrop n (Cons x xs) = seqDrop (n - 1) xs
+
+seqMap :: (a -> b) -> Sequence a -> Sequence b
+
+seqMap f Nil = Nil
+seqMap f (Cons x xs) = Cons (f x) (seqMap f xs)
 -- 6. Extend the Expr type and the evaluate function to allow raising a number to a power.
 data Expr a = Num a
 	    | Add (Expr a) (Expr a)
