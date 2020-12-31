@@ -29,3 +29,11 @@ treeInsert (Br (k', v') l r) k v =
 listDictToTreeDict :: Ord a => [(a, b)] -> Tree (a, b) 
 listDictToTreeDict [] = Lf
 listDictToTreeDict ((k, v):xs) = treeInsert (listDictToTreeDict xs) k v
+-- 5. Write a function to combine two dictionary represented as trees into one. In the case of clashing keys prefer the value from the first dictionary.
+mergeTrees :: (Ord a) => Tree (a, b) -> Tree (a, b) -> Tree (a, b)
+
+listOfTree :: Tree a -> [a]
+listOfTree (Br x l r) = listOfTree l ++ [x] ++ listOfTree r
+listOfTree Lf = []
+
+mergeTrees t t' = listDictToTreeDict (listOfTree t ++ listOfTree t')
