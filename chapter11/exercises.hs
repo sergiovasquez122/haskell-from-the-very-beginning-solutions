@@ -37,3 +37,15 @@ listOfTree (Br x l r) = listOfTree l ++ [x] ++ listOfTree r
 listOfTree Lf = []
 
 mergeTrees t t' = listDictToTreeDict (listOfTree t ++ listOfTree t')
+-- 6. Can you define a type for trees which, instead of branching exactly two ways each time, can zero or more ways, possibly different at each branch? Write simple functions like our treeSize, treeTotal, and treemap for your new type of tree.
+data NaryTree a = Branch a [NaryTree a] deriving Show
+
+treeSize :: (Num b) => NaryTree a -> b
+treeSize (Branch _ l) = 1 + (sum (map treeSize l))
+
+treeTotal :: (Num b) => NaryTree b -> b
+treeTotal (Branch x l) = x + (sum (map treeTotal l))
+
+treeMap :: (a -> b) -> NaryTree a -> NaryTree b
+
+treeMap f (Branch x l) = Branch (f x) (map (treeMap f) l)
