@@ -10,5 +10,10 @@ mirrorTree :: Tree a -> Tree a
 
 mirrorTree Lf = Lf
 mirrorTree (Br x l r) = Br x (mirrorTree r) (mirrorTree l) 
+-- 3. Write a function to determine if a two trees have the same shape, irrespective of the actual values of the elements.
+sameStructure :: Tree a -> Tree b -> Bool
 
-
+sameStructure Lf Lf = True
+sameStructure _ Lf = False
+sameStructure Lf _ = False
+sameStructure (Br _ l r) (Br _ l' r') = (sameStructure l l') && (sameStructure r r')
