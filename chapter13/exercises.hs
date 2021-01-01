@@ -11,6 +11,14 @@ fibInner :: (Num a) => a -> a -> [a]
 
 fib x y = fibInner x y
 fibInner x y = (x + y) : fibInner y (x + y)
+-- 4. Define an infinitely-branching tree containing the same data as allLists, but in the form of our tree diagram.
+data Tree a = Br a (Tree a) (Tree a)
+
+interleave :: [a] -> [a] -> [a]
+interleave (x:xs) ys = x : interleave ys xs
+makeList :: Tree a -> [a]
+
+makeList (Br x l r) = x : interleave (makeList l) (makeList r)
 -- 5. Write the function unleave which, given a list, return two lists, one containing elements at positions 0, 2, 4, ... of the original list, and the other containing elements at postions 1, 3, 5, 7 ...
 unleave :: [a] -> ([a], [a])
 unleave l = helper l False [] []
