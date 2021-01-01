@@ -30,3 +30,15 @@ roundNum x = let
               if (fromIntegral ceil_x - x) <= (x - fromIntegral floor_x) 
 		 then ceil_x
                  else floor_x
+
+separate :: (RealFrac a, Integral b) => a -> (b, a) 
+
+separate x = if x < 0 then 
+		      let (a, b) = separate (-x)
+			in (-a, b)
+                      else 
+	     let
+             whole_part = floor x
+             real_part = x - fromIntegral whole_part
+             in
+		(whole_part, real_part)
