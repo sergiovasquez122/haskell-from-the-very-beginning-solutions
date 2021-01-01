@@ -6,7 +6,11 @@ f = [2 ^ x | x <- [0 .. ]]
 copies :: [a] -> [a]
 copies x = if length x /= 0 then x ++ copies x else x
 -- 3. Write a list whose elements are the Fibonacci numbers 0, 1, 1, 2, 3, 5, 8 ... whose first two elements are zero and one by definition, and each ensuing element is the sum of the previous two
+fib :: (Num a) => a -> a -> [a]
+fibInner :: (Num a) => a -> a -> [a]
 
+fib x y = fibInner x y
+fibInner x y = (x + y) : fibInner y (x + y)
 -- 5. Write the function unleave which, given a list, return two lists, one containing elements at positions 0, 2, 4, ... of the original list, and the other containing elements at postions 1, 3, 5, 7 ...
 unleave :: [a] -> ([a], [a])
 unleave l = helper l False [] []
