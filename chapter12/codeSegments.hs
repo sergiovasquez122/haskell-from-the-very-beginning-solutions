@@ -14,15 +14,14 @@ scaleToLength l (a, b) =
 		where 
 			current_length = vectorLength (a, b)
 			factor = l / current_length
-
+-- 1. Write a function to find the point midway between two given points in two dimensions
 midPoint :: Floating a => (a, a) -> (a, a) -> (a, a)
-
 midPoint (x0, y0) (x1, y1) = (x, y)
                              where x = ((x0 + x1) / 2)
 				   y = ((y0 + y1) / 2)
 
+-- 2. Give a function roundNum which rounds  positive real number to the nearest whole number, returning it as another real number. You may use the built-in ceiling function, which is the opposite of the floor function
 roundNum :: (Ord a, RealFrac a, Integral b) => a -> b
-
 roundNum x = let 
              ceil_x = ceiling x
              floor_x = floor x
@@ -31,8 +30,8 @@ roundNum x = let
 		 then ceil_x
                  else floor_x
 
+-- 3. With a function to separate a real number into its whole and fractional parts. Return them as a tuple
 separate :: (RealFrac a, Integral b) => a -> (b, a) 
-
 separate x = if x < 0 then 
 		      let (a, b) = separate (-x)
 			in (-a, b)
@@ -42,3 +41,8 @@ separate x = if x < 0 then
              real_part = x - fromIntegral whole_part
              in
 		(whole_part, real_part)
+
+-- 6. Add the bool and char Types to our type class diagram 
+-- bool and char can be enumerated and are comparable
+-- they cannot provide any operations that would fit them into other categories
+
