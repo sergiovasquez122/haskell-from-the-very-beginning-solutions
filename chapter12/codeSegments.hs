@@ -41,7 +41,29 @@ separate x = if x < 0 then
              real_part = x - fromIntegral whole_part
              in
 		(whole_part, real_part)
+-- 4. Write a function star of type which, given a number zero and one, draws an asterisk to indicate the position. An argument of zero will result in an asterisk in column one, and an argument of one an asterisk in column fifty. 
+replicate' :: (Num a, Eq a) => a -> Char -> String
+replicate' 0 _ = []
+replicate' n x = x : replicate' (n - 1) x
 
+makeLine :: (Num a, Eq a) => a -> String
+makeLine x = replicate' x ' ' ++ ['*', '\n']
+
+star :: (RealFrac a) => a -> String
+
+star x = let 
+	 value = roundNum (x * 50)
+	 in 
+		if value == 50
+     		then makeLine 49
+		else makeLine value
+
+plot :: (Ord a, Num a, RealFrac b) => (a -> b) -> a -> a -> a -> String
+plot f a b dy = 
+	if a > b then
+	  []
+        else 
+          star (f a) ++ plot f (a + dy) b dy
 -- 6. Add the bool and char Types to our type class diagram 
 -- bool and char can be enumerated and are comparable
 -- they cannot provide any operations that would fit them into other categories
