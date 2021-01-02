@@ -57,7 +57,7 @@ star x = let
 		if value == 50
      		then makeLine 49
 		else makeLine value
-
+-- 5. Now write a function plot which, given a fnctino from numbers to numbers, a range, and a step size, uses start to draw a graph. 
 plot :: (Ord a, Num a, RealFrac b) => (a -> b) -> a -> a -> a -> String
 plot f a b dy = 
 	if a > b then
