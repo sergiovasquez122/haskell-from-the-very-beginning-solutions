@@ -60,3 +60,22 @@ readDictNumber n =
                      name <- getLine
                      remainder <- readDictNumber (n - 1)
                      return ((x, name) : remainder)
+-- Q4 Write a function which, given a number x, returns an IO action which, when run, prints the x-times table to a given filename
+printTable x filename = 
+-- Q5 Write a function to count the number of lines in a given file.
+readLine fh lineCount = 
+	do 
+	ended <- hIsEOF fh
+        if ended then 
+		do 
+		putStrLn (show lineCount)
+        else 
+          do  
+	  line <- hGetLine fh
+	  readLine fh (lineCount + 1)
+
+numberOfLines filename = 
+	do 
+	fh <- openFile filename ReadMode
+        readLine fh 0
+	hClose fh
