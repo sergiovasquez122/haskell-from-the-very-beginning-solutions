@@ -38,3 +38,25 @@ getTriple =
         y <- getIntegerRobust
         z <- getIntegerRobust
         return (x, y, z)
+-- Q3. In our readDict IO action,we waited for the user to type 0 to indicate no more data. This is clumsy. Implement a new readDcit function with a nicer system.
+readDict = 
+	do putStrLn "How many entries to read?"
+           x <- getIntegerMaybe
+           case x of 
+	     Nothing -> do 
+		        putStrLn "Not a number, try again"
+                        readDict
+             (Just y) -> if y < 0 then 
+				  do putStrLn "Not a positive number, try again"
+	                             readDict
+                                  else 
+				     readDictNumber y
+
+readDictNumber n = 
+	if n == 0 then return []
+	          else
+                     do
+                     x <- getIntegerRobust
+                     name <- getLine
+                     remainder <- readDictNumber (n - 1)
+                     return ((x, name) : remainder)
