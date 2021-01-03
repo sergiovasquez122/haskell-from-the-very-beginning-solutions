@@ -94,3 +94,19 @@ numberOfLines filename =
 	fh <- openFile filename ReadMode
         readLine fh 0
 	hClose fh
+-- Q6. Write a function copyFile which return an IO action which copies a file line by line.
+copyLineByLine f1 f2 = 
+	do e <- hIsEOF f1
+           if e then return ()
+		else 
+		do l <- hGetLine f1
+                   hPutStrLn f2 l
+                   copyLineByLine f1 f2
+
+copyFile sourcename destinationname = 
+	do 
+	f1 <- openFile sourcename ReadMode
+        f2 <- openFile destinationname WriteMode
+	copyLineByLine f1 f2
+	hClose f1
+        hClose f2
