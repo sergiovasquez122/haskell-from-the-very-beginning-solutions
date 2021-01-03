@@ -110,3 +110,22 @@ copyFile sourcename destinationname =
 	copyLineByLine f1 f2
 	hClose f1
         hClose f2
+-- Q7 Comment on the accuracy of our character, word, lien and sentence statistics in the case of our example paragraph. What about in general.
+-- The accuracy is good for the case of our example paragraph. In general it is subject to error since it requires very specific parsing formats for the file
+-- Q8 Choose one of the problems you have idenified, and modify our program to fix it.
+characterCountInner fh count = 
+	do e <- hIsEOF fh
+           if e then
+		do
+		putStrLn (show count)
+                return ()
+                else
+                do
+                l <- hGetLine fh
+                characterCountInner fh (count + 1 + (length l))
+
+characterCount filename = 
+	do
+	fh <- openFile filename ReadMode
+        characterCountInner fh 0
+        hClose fh
